@@ -141,6 +141,28 @@ function setNpmrcConfig(dir: string, env: NodeJS.ProcessEnv) {
 	}
 }
 
+/**
+ * tree-sitter@0.22.4 hard-pins "-std=c++17" in its binding.gyp, which is
+ * incompatible with Node 24's V8 headers that require C++20. Patch the
+ * binding.gyp to use c++20 on Linux/Mac so compilation succeeds.
+ * Upstream fix: https://github.com/tree-sitter/node-tree-sitter/issues/268
+ */
+function patchTreeSitterBindingGyp(buildDir: string): void {
+	const bindingGypPath = path.join(root, buildDir, 'node_modules', 'tree-sitter', 'binding.gyp');
+	if (!fs.existsSync(bindingGypPath)) {
+		return;
+	}
+	const content = fs.readFileSync(bindingGypPath, 'utf8');
+	if (content.includes('-std=c++20')) {
+		return; // already patched
+	}
+	const patched = content
+		.replace(/"-std=c\+\+17"/g, '"-std=c++20"')
+		.replace(/"c\+\+17"/g, '"c++20"');
+	fs.writeFileSync(bindingGypPath, patched);
+	log(buildDir, 'Patched tree-sitter binding.gyp: c++17 -> c++20 for Node 24 compatibility');
+}
+
 function removeParcelWatcherPrebuild(dir: string) {
 	const parcelModuleFolder = path.join(root, dir, 'node_modules', '@parcel');
 	if (!fs.existsSync(parcelModuleFolder)) {
@@ -260,14 +282,29 @@ async function main() {
 		}
 
 		if (dir === 'build') {
-			nativeTasks.push(() => {
+			nativeTasks.push(async () => {
 				const env: NodeJS.ProcessEnv = { ...process.env };
 				if (process.env['CC']) { env['CC'] = 'gcc'; }
 				if (process.env['CXX']) { env['CXX'] = 'g++'; }
 				if (process.env['CXXFLAGS']) { env['CXXFLAGS'] = ''; }
 				if (process.env['LDFLAGS']) { env['LDFLAGS'] = ''; }
 				setNpmrcConfig('build', env);
-				return npmInstallAsync('build', { env });
+				// Step 1: install without scripts so tree-sitter sources are present
+				await spawnAsync(npm, ['install', '--ignore-scripts'], { ...{ env }, cwd: path.join(root, 'build'), shell: true });
+				// Step 2: patch tree-sitter's binding.gyp for Node 24 C++20 compatibility
+				patchTreeSitterBindingGyp('build');
+				// Step 3: rebuild only tree-sitter with the patched binding.gyp.
+				// Override nodedir to the local Node installation so node-gyp uses headers
+				// that are already present instead of downloading the .npmrc target version
+				// (22.22.1), which fails with ENOENT in node-gyp 12 on Linux.
+				// Clean stale native build artifacts first to avoid dependency file errors.
+				const treeSitterBuildDir = path.join(root, 'build', 'node_modules', 'tree-sitter', 'build');
+				fs.rmSync(treeSitterBuildDir, { recursive: true, force: true });
+				const rebuildEnv = { ...env };
+				rebuildEnv['npm_config_nodedir'] = process.execPath.replace(/[/\\]bin[/\\]node(?:\.exe)?$/, '');
+				rebuildEnv['npm_config_target'] = process.versions.node;
+				await spawnAsync(npm, ['rebuild', 'tree-sitter'], { ...{ env: rebuildEnv }, cwd: path.join(root, 'build'), shell: true });
+				removeParcelWatcherPrebuild('build');
 			});
 			continue;
 		}

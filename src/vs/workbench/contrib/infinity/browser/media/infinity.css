@@ -1,0 +1,373 @@
+/*---------------------------------------------------------------------------------------------
+ *  Infinity IDE — Sleek Card Styling & Visual Identity
+ *--------------------------------------------------------------------------------------------*/
+
+.infinity-container {
+	padding: 16px;
+	height: 100%;
+	box-sizing: border-box;
+	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+	font-family: var(--vscode-font-family);
+	color: var(--vscode-foreground);
+	background: var(--vscode-editor-background);
+}
+
+/* Hero / Pool Status Header */
+.infinity-hero {
+	background: linear-gradient(135deg, rgba(30, 30, 46, 0.7) 0%, rgba(20, 20, 35, 0.9) 100%);
+	border: 1px solid rgba(80, 160, 255, 0.25);
+	border-radius: 12px;
+	padding: 16px 18px;
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+	position: relative;
+	overflow: hidden;
+}
+
+.infinity-hero::before {
+	content: '';
+	position: absolute;
+	top: -50%;
+	left: -50%;
+	width: 200%;
+	height: 200%;
+	background: radial-gradient(circle, rgba(0, 242, 254, 0.08) 0%, transparent 60%);
+	pointer-events: none;
+}
+
+.infinity-hero-title-row {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 8px;
+}
+
+.infinity-brand {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.infinity-logo-icon {
+	font-size: 22px;
+	font-weight: 900;
+	background: linear-gradient(135deg, #00f2fe 0%, #4facfe 50%, #9b51e0 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	text-shadow: 0 0 15px rgba(0, 242, 254, 0.4);
+}
+
+.infinity-title {
+	font-size: 15px;
+	font-weight: 700;
+	letter-spacing: 0.5px;
+	background: linear-gradient(135deg, #ffffff 0%, #e0e0e0 100%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+.infinity-strategy-pill {
+	font-size: 10px;
+	font-weight: 600;
+	text-transform: uppercase;
+	padding: 3px 8px;
+	border-radius: 20px;
+	background: rgba(0, 242, 254, 0.12);
+	border: 1px solid rgba(0, 242, 254, 0.3);
+	color: #00f2fe;
+	letter-spacing: 0.5px;
+}
+
+.infinity-stats-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 10px;
+	margin-top: 12px;
+	padding-top: 12px;
+	border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.infinity-stat-box {
+	display: flex;
+	flex-direction: column;
+}
+
+.infinity-stat-label {
+	font-size: 11px;
+	color: var(--vscode-descriptionForeground);
+	margin-bottom: 2px;
+}
+
+.infinity-stat-value {
+	font-size: 14px;
+	font-weight: 700;
+	color: #4facfe;
+}
+
+.infinity-stat-value.green {
+	color: #38ef7d;
+}
+
+/* Action Bar */
+.infinity-action-bar {
+	display: flex;
+	gap: 10px;
+}
+
+.infinity-vibecode-btn {
+	flex: 1;
+	background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+	color: #ffffff;
+	border: none;
+	border-radius: 8px;
+	padding: 10px 16px;
+	font-size: 13px;
+	font-weight: 700;
+	letter-spacing: 0.5px;
+	cursor: pointer;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 8px;
+	box-shadow: 0 4px 15px rgba(0, 114, 255, 0.35);
+	transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.infinity-vibecode-btn:hover {
+	transform: translateY(-1px);
+	box-shadow: 0 6px 20px rgba(0, 198, 255, 0.5);
+	background: linear-gradient(135deg, #1ad0ff 0%, #1a82ff 100%);
+}
+
+.infinity-vibecode-btn:active {
+	transform: translateY(1px);
+	box-shadow: 0 2px 10px rgba(0, 114, 255, 0.3);
+}
+
+/* Provider Cards List */
+.infinity-cards-list {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+}
+
+/* Single Provider Card */
+.infinity-card {
+	background: var(--vscode-sideBar-background, rgba(30, 30, 35, 0.6));
+	border: 1px solid rgba(255, 255, 255, 0.08);
+	border-radius: 10px;
+	padding: 14px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	transition: all 0.2s ease;
+	position: relative;
+}
+
+.infinity-card:hover {
+	border-color: rgba(80, 160, 255, 0.35);
+	box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.infinity-card.healthy {
+	border-left: 3px solid #38ef7d;
+}
+
+.infinity-card.unconfigured {
+	border-left: 3px solid rgba(255, 255, 255, 0.2);
+	opacity: 0.9;
+}
+
+.infinity-card-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.infinity-card-title-group {
+	display: flex;
+	align-items: center;
+	gap: 8px;
+}
+
+.infinity-status-dot {
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, 0.3);
+	display: inline-block;
+}
+
+.infinity-status-dot.healthy {
+	background: #38ef7d;
+	box-shadow: 0 0 8px rgba(56, 239, 125, 0.7);
+}
+
+.infinity-status-dot.testing {
+	background: #ffaa00;
+	box-shadow: 0 0 8px rgba(255, 170, 0, 0.7);
+	animation: pulse 1s infinite alternate;
+}
+
+.infinity-card-name {
+	font-size: 13px;
+	font-weight: 700;
+	color: var(--vscode-foreground);
+}
+
+.infinity-badges-group {
+	display: flex;
+	gap: 6px;
+}
+
+.infinity-pill {
+	font-size: 10px;
+	font-weight: 600;
+	padding: 2px 7px;
+	border-radius: 12px;
+	background: rgba(255, 255, 255, 0.08);
+	color: var(--vscode-foreground);
+}
+
+.infinity-pill.cyan {
+	background: rgba(0, 242, 254, 0.15);
+	color: #00f2fe;
+}
+
+.infinity-pill.green {
+	background: rgba(56, 239, 125, 0.15);
+	color: #38ef7d;
+}
+
+.infinity-pill.purple {
+	background: rgba(155, 81, 224, 0.18);
+	color: #b779ff;
+}
+
+.infinity-card-subtitle {
+	font-size: 11px;
+	color: var(--vscode-descriptionForeground);
+	margin-top: -4px;
+}
+
+/* Key Input Group */
+.infinity-key-group {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	margin-top: 4px;
+}
+
+.infinity-key-input {
+	flex: 1;
+	background: var(--vscode-input-background, #1e1e1e);
+	color: var(--vscode-input-foreground, #ffffff);
+	border: 1px solid var(--vscode-input-border, rgba(255, 255, 255, 0.15));
+	border-radius: 6px;
+	padding: 6px 10px;
+	font-size: 12px;
+	font-family: var(--vscode-editor-font-family, monospace);
+	outline: none;
+	transition: border-color 0.15s ease;
+}
+
+.infinity-key-input:focus {
+	border-color: #4facfe;
+	box-shadow: 0 0 0 1px #4facfe;
+}
+
+.infinity-mini-btn {
+	background: rgba(255, 255, 255, 0.07);
+	border: 1px solid rgba(255, 255, 255, 0.12);
+	color: var(--vscode-foreground);
+	border-radius: 6px;
+	padding: 6px 10px;
+	font-size: 11px;
+	font-weight: 500;
+	cursor: pointer;
+	white-space: nowrap;
+	transition: all 0.15s ease;
+}
+
+.infinity-mini-btn:hover {
+	background: rgba(255, 255, 255, 0.15);
+	color: #ffffff;
+}
+
+.infinity-get-key-link {
+	font-size: 11px;
+	color: #4facfe;
+	text-decoration: none;
+	display: inline-flex;
+	align-items: center;
+	gap: 3px;
+	cursor: pointer;
+	transition: color 0.15s ease;
+}
+
+.infinity-get-key-link:hover {
+	color: #00f2fe;
+	text-decoration: underline;
+}
+
+.infinity-card-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 11px;
+	margin-top: 2px;
+	color: var(--vscode-descriptionForeground);
+}
+
+/* Custom Switch Toggle */
+.infinity-switch {
+	position: relative;
+	display: inline-block;
+	width: 34px;
+	height: 18px;
+}
+
+.infinity-switch input {
+	opacity: 0;
+	width: 0;
+	height: 0;
+}
+
+.infinity-slider {
+	position: absolute;
+	cursor: pointer;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(255, 255, 255, 0.18);
+	transition: .2s;
+	border-radius: 18px;
+}
+
+.infinity-slider:before {
+	position: absolute;
+	content: "";
+	height: 14px;
+	width: 14px;
+	left: 2px;
+	bottom: 2px;
+	background-color: white;
+	transition: .2s;
+	border-radius: 50%;
+}
+
+input:checked + .infinity-slider {
+	background: linear-gradient(135deg, #00c6ff 0%, #0072ff 100%);
+}
+
+input:checked + .infinity-slider:before {
+	transform: translateX(16px);
+}
+
+@keyframes pulse {
+	0% { opacity: 0.5; transform: scale(0.9); }
+	100% { opacity: 1; transform: scale(1.1); }
+}

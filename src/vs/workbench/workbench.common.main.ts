@@ -373,6 +373,9 @@ import './contrib/folding/browser/folding.contribution.js';
 // Limit Indicator
 import './contrib/limitIndicator/browser/limitIndicator.contribution.js';
 
+// Infinity IDE — Unlimited Token AI Provider Pool
+import './contrib/infinity/browser/infinity.contribution.js';
+
 // Inlay Hint Accessibility
 import './contrib/inlayHints/browser/inlayHintsAccessibilty.js';
 
